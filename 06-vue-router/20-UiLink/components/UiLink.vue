@@ -1,10 +1,28 @@
 <script setup>
-// Вместо <span> должен быть <RouterLink> или <a>
-// Используйте динамический компонент <component :is="...">
+defineProps({
+  to: {
+    type: [String, Object],
+    required: false,
+  },
+  href: {
+    type: String,
+    required: false,
+  },
+  target: {
+    type: String,
+    required: false,
+  },
+})
 </script>
 
 <template>
-  <span class="link" tabindex="0">Link</span>
+  <component
+    :is="to ? 'RouterLink' : 'a'"
+    v-bind="to ? { to } : { href, target }"
+    class="link"
+  >
+    <slot></slot>
+  </component>
 </template>
 
 <style scoped>
